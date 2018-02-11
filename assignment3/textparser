@@ -1,0 +1,14 @@
+void setup() {  
+
+String [] lines = loadStrings("wordfrequency.txt");
+String [][] array = new String[lines.length][2];
+
+for (int i = 0 ; i < lines.length; i++) {
+      array[i] = lines[i].split(": ");
+}
+
+for (int i = 0 ; i < array.length; i++) {
+      println(array[i][0] + "," + array[i][1]);
+
+}
+}
