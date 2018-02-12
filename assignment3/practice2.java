@@ -9,10 +9,6 @@ String [] lines;
 color a = color(100,0,0);
 color b = color(0,100,0);
 color c = color(0,0,100);
-// Last row
-// 590
-// Last Column
-// 640
 
 // Parse txt file
 // textWidth() each word
@@ -24,17 +20,20 @@ void setup() {
 }
 
 void draw() {
-
+  // 590: EDGE Y-AXIS
+  int edge_y = 590;
+  // 670: EDGE X-AXIS
+  float edge_x = 270;
   // Set initial color
   color actual_color = a;
-  // Row Distance start at 0
-  float row_dist = 0;
+  // How far down the rows are(Horizontal)
+  int row_dist = 0;
   // Mark the first row
   int y_dist = 0;
   // Length of prior text
   float x_text = 0;
-  // Column distance
-  int column_dist = 0;
+  // How far to the right the columns are(Vertical)
+  float column_dist = 0;
   // How many color changes
   int color_change = 0;
   // Load Font
@@ -42,21 +41,24 @@ void draw() {
   textFont(font, 32);
   int i = 0;
 
-  while(column_dist < 590){
-    if ((row_dist + float(10) + textWidth(lines[i])) > float(670)){
-      column_dist += 30;
-      row_dist = float(30);
+  // Good
+  while(row_dist < edge_y){
+    // Only used for the very first word
+    if (y_dist == 0){
+      column_dist += float(30);
+      row_dist += 30;
       x_text = textWidth(lines[i]);
-
+      y_dist += 1;
     }
-    else if (y_dist == 0){
-      row_dist += float(30);
-      column_dist += 30;
+    // Nope
+    else if ((column_dist + float(10) + textWidth(lines[i])) > edge_x){
+      row_dist += 30;
+      column_dist = float(30);
       x_text = textWidth(lines[i]);
       y_dist += 1;
     }
     else{
-      row_dist += (float(10) + x_text);
+      column_dist += (float(10) + x_text);
       x_text = textWidth(lines[i]);
     }
 
@@ -70,12 +72,12 @@ void draw() {
       actual_color = c;
     }
 
-    if(column_dist >= 590){
+    if(row_dist >= edge_y){
         break;
     }
 
     fill(actual_color);
-    text(lines[i], int(row_dist), column_dist );
+    text(lines[i], int(column_dist), row_dist );
 
     i += 1;
     color_change += 1;
@@ -83,4 +85,8 @@ void draw() {
   if (mousePressed == true){
   Collections.shuffle(Arrays.asList(lines));
   }
+  fill(a);
+  line(edge_x,edge_y,edge_x,0);
+  line(0,edge_y,edge_x,edge_y);
+
 }
