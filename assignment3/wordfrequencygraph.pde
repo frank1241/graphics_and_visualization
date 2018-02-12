@@ -16,15 +16,27 @@ int frequency;
 String[] lines;
 String[][] wordarray;
 
+
+
+
 void setup(){
   size(1920,1080);
   background(255);
   stringParser();  
   
+  
+  
+  
 }
 
 
 void draw(){
+  
+  //create title
+  fill(0);
+  textSize(32);
+  text("Total Unique Words for each Word Frequency",600,100);
+  
   
   //create Axes
   line(75,100,75,900);
@@ -59,9 +71,12 @@ void draw(){
   
   }  
   
+  textSize(15);
+  text("3000+",30,49);
+  
   
   //Creates X axis tick marks
-  for(int x = 0; x<1730;x+=14){
+  for(int x = 14; x<1744;x+=14){
       //tickmark
       boxmiddle = 75+x;
       line(boxmiddle,897,boxmiddle,903);
@@ -69,16 +84,16 @@ void draw(){
       //create bar
       drawBar();
       wordindex += 1;
-      
+          
       
   }
+  
   noLoop();
 }
 
 
 
-//These are the new Changes
-//added axis labels, and now creates a bar
+
 void drawBar(){
   
   frequency = Integer.parseInt(wordarray[wordindex][0]);
@@ -89,37 +104,36 @@ void drawBar(){
   
   //creates an axes label for the bar
   if(str(frequency).length()==1){
-    textSize(8);
-    fill(0);
-    pushMatrix();
-    translate(boxmiddle,910);
-    rotate(-(HALF_PI));
-    text(frequency,0,0);
-    popMatrix(); 
-  }
-  else if(str(frequency).length()<3){
-    textSize(8);
+    textSize(10);
     fill(0);
     pushMatrix();
     translate(boxmiddle,915);
     rotate(-(HALF_PI));
     text(frequency,0,0);
+    popMatrix(); 
+  }
+  else if(str(frequency).length()<3){
+    textSize(10);
+    fill(0);
+    pushMatrix();
+    translate(boxmiddle,920);
+    rotate(-(HALF_PI));
+    text(frequency,0,0);
     popMatrix();
   }
   else{
-    textSize(8);
+    textSize(10);
     fill(0);
     pushMatrix();
-    translate(boxmiddle,925);
+    translate(boxmiddle,930);
     rotate(-(HALF_PI));
     text(frequency,0,0);
     popMatrix();
   }
   
   //creates the bar
-  fill(255);
-  rect(boxmiddle-7,900-wordcount,14,wordcount);
-
+  fill(0,255,0);
+  rect(boxmiddle-7,900-.8*wordcount,14,wordcount*.8);
   
   
   
