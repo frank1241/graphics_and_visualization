@@ -1,0 +1,11 @@
+This project visualizes and analyzes the words used in the novel "The Vision of Hell" by Dante Alighierl. The extract_words python script
+extracts all the the words without punctuation used in the novel, finds the unique words, and also the number of words that occured at each
+frequency. A Wordle Word cloud was used to visualize all the words used in the novel initially. Then the unique words were analyzed 
+and displayed on a canvas in the a3_novelvisualization processing script. The words were color coded according to their word length.
+Finally the number of words that occured at each frequnecy were visualized using a barchart. From the barchart it appears that 
+there were a large number of words that occured only once while only a few number of words occured many times. 
+
+Contributions:
+Frank - Extract_words.py and Wordle Word Cloud
+Eric - a3_wordfrequency  
+Sam - a3_novelvisualization 
