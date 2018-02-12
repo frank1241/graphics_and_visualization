@@ -44,22 +44,23 @@ void draw() {
   // Good
   while(row_dist < edge_y){
     // Only used for the very first word
+    if (y_dist != 0){
+      x_text = textWidth(lines[i - 1]);
+    }
+    
     if (y_dist == 0){
       column_dist += float(30);
       row_dist += 30;
-      x_text = textWidth(lines[i]);
       y_dist += 1;
     }
     // Nope
     else if ((column_dist + float(10) + textWidth(lines[i])) > edge_x){
       row_dist += 30;
       column_dist = float(30);
-      x_text = textWidth(lines[i]);
       y_dist += 1;
     }
     else{
       column_dist += (float(10) + x_text);
-      x_text = textWidth(lines[i]);
     }
 
     if(color_change % 3 == 0){
@@ -82,10 +83,11 @@ void draw() {
     i += 1;
     color_change += 1;
   }
+
   if (mousePressed == true){
   Collections.shuffle(Arrays.asList(lines));
   }
-  fill(a);
+
   line(edge_x,edge_y,edge_x,0);
   line(0,edge_y,edge_x,edge_y);
 
