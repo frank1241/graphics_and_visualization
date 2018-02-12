@@ -7,7 +7,7 @@ def main():
     wordFrequencyOutput = open("wordfrequency.txt", "w")
 
     # Open book for reading
-    filePath = r"C:\Users\Frank Wang\Documents\2018 - 2019 School Work\4. Elements of Graphics and Visualization\2-11\TheVisionOfHell.txt"
+    filePath = r"TheVisionOfHell.txt"
     book = open(filePath, 'r', encoding='utf8')
 
     # create a dictionary of words and their respective frequencies
