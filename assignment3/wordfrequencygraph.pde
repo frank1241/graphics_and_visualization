@@ -71,6 +71,7 @@ void draw(){
   
   }  
   
+  //3000+ Tick Mark for words that appear once
   textSize(15);
   text("3000+",30,49);
   
