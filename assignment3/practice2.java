@@ -24,7 +24,7 @@ void draw() {
   // 590: EDGE Y-AXIS
   int edge_y = 590;
   // 670: EDGE X-AXIS
-  float edge_x = 550;
+  float edge_x = 670;
   // Set initial color
   color actual_color = a;
   // How far down the rows are(Horizontal)
@@ -79,6 +79,17 @@ void draw() {
     }
 
     fill(actual_color);
+
+    if ((column_dist + float(10) + textWidth(lines[i])) > edge_x){
+      row_dist += 35;
+      column_dist = float(30);
+      y_dist += 1;
+    }
+
+    if(row_dist >= edge_y){
+        break;
+    }
+
     text(lines[i], int(column_dist), row_dist );
 
     i += 1;
@@ -88,10 +99,6 @@ void draw() {
   if (mousePressed == true){
   Collections.shuffle(Arrays.asList(lines));
   }
-
-  line(edge_x,edge_y,edge_x,0);
-  line(edge_x + 180 ,edge_y,edge_x + 180,0);
-  line(0,edge_y,edge_x,edge_y);
 
 }
 
