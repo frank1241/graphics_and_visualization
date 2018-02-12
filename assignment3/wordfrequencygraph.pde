@@ -77,11 +77,51 @@ void draw(){
 
 
 
-
+//These are the new Changes
+//added axis labels, and now creates a bar
 void drawBar(){
   
   frequency = Integer.parseInt(wordarray[wordindex][0]);
   wordcount = Integer.parseInt(wordarray[wordindex][1]);
+  
+  //how high is the rectangle
+  tall = 900 - wordcount;
+  
+  //creates an axes label for the bar
+  if(str(frequency).length()==1){
+    textSize(8);
+    fill(0);
+    pushMatrix();
+    translate(boxmiddle,910);
+    rotate(-(HALF_PI));
+    text(frequency,0,0);
+    popMatrix(); 
+  }
+  else if(str(frequency).length()<3){
+    textSize(8);
+    fill(0);
+    pushMatrix();
+    translate(boxmiddle,915);
+    rotate(-(HALF_PI));
+    text(frequency,0,0);
+    popMatrix();
+  }
+  else{
+    textSize(8);
+    fill(0);
+    pushMatrix();
+    translate(boxmiddle,925);
+    rotate(-(HALF_PI));
+    text(frequency,0,0);
+    popMatrix();
+  }
+  
+  //creates the bar
+  fill(255);
+  rect(boxmiddle-7,900-wordcount,14,wordcount);
+
+  
+  
   
   
 }
