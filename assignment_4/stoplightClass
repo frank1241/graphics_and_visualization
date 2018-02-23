@@ -1,0 +1,70 @@
+//Tab 1, building the stoplight
+
+PShape light; 
+int globaltimer;
+
+void setup(){
+size(1500,1000);
+
+
+  //stoplight building
+  light  = createShape(GROUP);
+  fill(#E3CF39);
+  light.addChild(createShape(RECT,0,0,100,300));
+  light.addChild(createShape(ELLIPSE,50,50,50,50));
+  light.addChild(createShape(ELLIPSE,50,150,50,50));
+  light.addChild(createShape(ELLIPSE,50,250,50,50));
+  
+  //pole bottom
+  light.addChild(createShape(RECT,35,300,20,250));
+  
+}  
+
+
+void draw(){
+  
+  
+  //create a stop light at 100,100.
+  Stoplight b = new Stoplight(100,100,globaltimer);
+  //this is my bid for a global timer. Counts 60 frames per second for 5 seconds.
+  globaltimer++; 
+  if(globaltimer%300 == 0){
+    globaltimer = 0;
+  }
+  
+  
+}
+
+//Tab 2
+
+class Stoplight{
+  float x,y; 
+  Stoplight(float x, float y,int globaltimer){
+    this.x = x;
+    this.y = y;
+    shape(light,this.x,this.y);
+    //this is where you need to change the variable names to match the global timer
+    if(globaltimer <180){
+      this.turnGreen();
+    }
+    else if(globaltimer>180 && globaltimer<240){
+      this.turnYellow();
+    }
+    else if(globaltimer>240){
+      this.turnRed();
+    }
+  }
+  void turnRed(){
+    fill(#FF2C2C); 
+    beginShape(GROUP);
+    ellipse(this.x+50,this.y+50,50,50);  
+  }
+  void turnYellow(){
+    fill(#FCFC08); 
+    ellipse(this.x+50,this.y+150,50,50);
+  }
+  void turnGreen(){
+    fill(#30B22F); 
+    ellipse(this.x+50,this.y+250,50,50);
+  }
+}
