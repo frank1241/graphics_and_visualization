@@ -141,6 +141,9 @@ class Stoplight{
     light.addChild(createShape(RECT,35,300,20,250));
    
   }
+  public void shake(int globaltimer){
+    this.x = this.x + cos(globaltimer/100);
+  }
   public void turnRed(){
     fill(0xffFF2C2C); 
     beginShape(GROUP);
@@ -155,6 +158,7 @@ class Stoplight{
     ellipse(this.x+50,this.y+250,50,50);
   }
   public void display(int globaltimer){
+     this.shake(globaltimer);
      shape(light,this.x,this.y);
      if(globaltimer <500){
       this.turnGreen();
