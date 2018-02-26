@@ -1,11 +1,8 @@
-class flares {
 
-}
 
 class Sun_moon {
 float x,y,z,w,m;
 PShape skyobject;
-PShape t1,t2,t3,t4;
 Sun_moon(float x, float y, float z, float w,float m){
   // Creating Moon and Sun
   this.x = x;
@@ -318,6 +315,8 @@ Stoplight stoplight1;
 Stoplight stoplight2;
 Sun_moon sun1;
 Sun_moon moon1;
+int fillcouler = 255;
+float colorincrement = 0;
 
 public void setup(){
   size(1800,1000);
@@ -332,8 +331,8 @@ public void setup(){
 }
 
 public void draw(){
-  float i = sun_moon_timer/255;
-  // Background color change
+
+
   if ((sun_moon_timer/60) <= 4){
     background(255);
   }
