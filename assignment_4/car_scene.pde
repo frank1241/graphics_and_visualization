@@ -20,6 +20,7 @@ public void move(float v){
   }
 }
 public void display() {
+  fill(color(152,123,18));
   ellipse(x, y, 2.2f * r, 2.2f * r);
   ellipse(x, y, 2*r, 2*r);
   line(x + r*cos(angle*PI/180), y + r*sin(angle*PI/180), x - r*cos(angle*PI/180), y - r*sin(angle*PI/180));
@@ -144,6 +145,21 @@ class Stoplight{
   public void shake(int globaltimer){
     this.x = this.x + cos(globaltimer/100);
   }
+  
+  public void move(int timer){
+    if (this.x < 0){
+    this.x += 1800;
+  } else if (timer < 250){
+    this.x += -2;
+  } else if (timer < 500){
+      this.x += -4;
+  } else if (timer < 800) {
+      this.x += -2;
+  } else {
+      this.x += 0;
+  }
+  }
+  
   public void turnRed(){
     fill(0xffFF2C2C); 
     beginShape(GROUP);
@@ -158,7 +174,7 @@ class Stoplight{
     ellipse(this.x+50,this.y+250,50,50);
   }
   public void display(int globaltimer){
-     this.shake(globaltimer);
+     this.move(globaltimer);
      shape(light,this.x,this.y);
      if(globaltimer <500){
       this.turnGreen();
@@ -194,9 +210,7 @@ public void draw(){
   // Stoplight
   stoplight1.display(globaltimer);
   stoplight2.display(globaltimer);
-  
-
-  
+ 
   if (globaltimer < 500){
     vehicle1.setAcceleration(0.06f);
     vehicle2.setAcceleration(0.07f);
@@ -210,8 +224,6 @@ public void draw(){
     vehicle1.setVelocity(0);
     vehicle2.setVelocity(0);
   }
-    println(globaltimer);
-    println(vehicle1.v);
     vehicle1.display();
     vehicle1.move();
     vehicle1.accelerate();
@@ -226,10 +238,5 @@ public void draw(){
   globaltimer += 1;
   if(globaltimer%1000 == 0){
     globaltimer = 0;
-  }
-  
-  
-  
-  
+  } 
 }
-    
