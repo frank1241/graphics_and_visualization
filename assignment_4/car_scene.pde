@@ -163,15 +163,15 @@ class Stoplight{
   public void turnRed(){
     fill(0xffFF2C2C); 
     beginShape(GROUP);
-    ellipse(this.x+50,this.y+50,50,50);  
+    ellipse(this.x+50,this.y+50,50+10*cos(globaltimer/10),50+10*cos(globaltimer/10));  
   }
   public void turnYellow(){
     fill(0xffFCFC08); 
-    ellipse(this.x+50,this.y+150,50,50);
+    ellipse(this.x+50,this.y+150,50+10*cos(globaltimer/10),50+10*cos(globaltimer/10));
   }
   public void turnGreen(){
     fill(0xff30B22F); 
-    ellipse(this.x+50,this.y+250,50,50);
+    ellipse(this.x+50,this.y+250,50+10*cos(globaltimer/10),50+10*cos(globaltimer/10));
   }
   public void display(int globaltimer){
      this.move(globaltimer);
