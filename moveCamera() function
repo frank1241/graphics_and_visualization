@@ -1,0 +1,29 @@
+
+void moveCamera(){
+  if(keyPressed == true){
+    if(key == 'd'){
+      z+=5;
+    }
+    if(key == 'a'){
+      z-=5;
+    }
+    if(key == 's'){
+      x -=5;
+    }
+    if(key == 'w'){
+      x+=5;
+    }
+    if(key == 'q'){
+      y+=5;
+    }
+    if(key == 'e'){
+      y-=5;
+    }
+  }
+  
+  beginCamera();
+  camera(x,y,z,
+         (width/2)+x,(height/2)+y,10+z,
+         0,1,0);
+  endCamera();
+}
