@@ -5,6 +5,7 @@ class Plankton{
   PShape plbody;
   PShape plleftarm;
   PShape plrightarm;
+  
   Plankton(int x,int y,int z){
     this.x = x;
     this.y = y;
@@ -24,10 +25,10 @@ class Plankton{
       plrightarm.rotateX(PI/4);
   }  
   public void waveLeft(){
-    plleftarm.rotateX(.005*cos(.01*globaltimer));
+    plleftarm.rotateX(.005*cos(.01*globalTimer));
   }
   public void jump(){
-    this.y = this.y - 5*cos(globaltimer/100);
+    this.y = this.y - 5*cos(globalTimer/100);
   }
   public void display(){
     pushMatrix();
@@ -42,6 +43,7 @@ class Plankton{
     this.x += this.x + abs(cos(globaltimer));
   }
 }
+
 class Spongebob {
 float x, y;
 PShape body;
@@ -82,17 +84,12 @@ public void move(float vx, float vy){
   this.x += vx;
   this.y += vy;
   }
-
 public void armmoveForward(){
   leftArm.rotateZ(-PI/30);
   }
-  
-
-
 public void armmoveBackward(){
   leftArm.rotateZ(PI/30);
 }
-
 public void display() {
   shape(body, x, y, body.width, body.height);
   shape(rightLeg, x+15, y+65, rightLeg.width, rightLeg.height);
@@ -102,14 +99,14 @@ public void display() {
 }
 
 Spongebob Spongebob1;
+Plankton plank1;
 float rotation = 0;
-
 int globalTimer;
 
 public void setup(){
   size(1800,1000,P3D);
   Spongebob1 = new Spongebob(1400,800);
-  plank1 = new Plankton(width/2,height/2,100);
+  plank1 = new Plankton(width/2,height-300,100);
 }
 
 public void draw(){
