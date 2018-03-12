@@ -13,16 +13,19 @@ class Plankton{
     plbody = loadShape("Plankton.obj");
       plbody.rotateX(PI/2);
       plbody.rotateY(PI/2);
+      plbody.rotateY(PI/2);
     plleftarm = loadShape("forbiddenarm.obj");
       plleftarm.rotateX(PI/2);
       plleftarm.rotateY(PI/2);
       plleftarm.translate(0,-50,-20);
       plleftarm.rotateX(-PI/4);
+      plleftarm.rotateY(PI/2);
     plrightarm = loadShape("forbiddenarm.obj");
       plrightarm.rotateX(PI/2);
       plrightarm.rotateY(PI/2);
       plrightarm.translate(0,-50,20);
       plrightarm.rotateX(PI/4);
+      plrightarm.rotateY(PI/2);
   }  
   public void waveLeft(){
     plleftarm.rotateX(.005*cos(.01*globalTimer));
