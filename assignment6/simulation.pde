@@ -1,3 +1,58 @@
+class FishingPole {
+  //location of pole
+  float x, y, initx, inity, vy, ay;
+  //this was adapted from the lecture notes
+  //i rewrote the variable names to match what i'm doing
+  //mass of the bobber
+  float bobmass = 1.0;
+  float equilibrium = 850;
+  //i'm assuming water has a spring constant, it doesn't but I'm assuming
+  float ks = 0.05;
+  //and water has a pretty strong dampening force
+  float kd = 0.1;
+  float buoyantforce, gravity, pull;
+  FishingPole(float x, float y) {
+    this.x = x;
+    this.y = y;
+    this.initx = x;
+    this.inity = y;
+  }
+  void applyForces() {
+    //gravity
+    this.gravity = -.05;
+    //buoyant force
+    this.buoyantforce = -((ks * (this.y - equilibrium)) + kd*vy);
+    //calculating the net acceleration
+    this.ay = this.buoyantforce/(this.bobmass); //Force/Mass = acceleration
+    this.ay += this.gravity; 
+    //add it to my vy
+    this.vy = this.vy + this.ay;
+    this.y += this.vy;
+  }
+  void display() {
+    //pole
+    pushMatrix();
+    fill(#FF5E36);
+    translate(this.initx, this.inity);
+    rotate(-PI/4);
+    rect(0, 0, 12, 300);
+    popMatrix();
+    this.applyForces();
+    //bobber
+    pushMatrix();
+    ellipseMode(RADIUS);
+    line(this.initx, this.inity, this.x, this.y);
+    ellipse(this.x, this.y, 25, 25);
+    noFill();
+    translate(0,25);
+    bezier(this.x,this.y,this.x+5,this.y+5,this.x-15,this.y+45,this.x-30,this.y+25);
+    popMatrix();
+    if(globaltimer%100 == 0){
+      this.y = this.inity;
+    }
+  }
+}
+
 class Fish{
   PShape group;
   PShape tail;
@@ -97,12 +152,14 @@ class Ramp{
 Water water1;
 Ramp ramp1;
 Fish fish1;
-
+FishingPole fp1;
+int globaltimer;
 void setup(){
   size(1800, 1000);
   water1 = new Water(400, 1450, 750, 35, 0.1);
   ramp1 = new Ramp(0, 400, 500, 720);
   fish1 = new Fish(225,445);
+  fp1 = new FishingPole(1350,435); 
 }
 
 void draw() {
@@ -114,6 +171,8 @@ void draw() {
   ramp1.display();
   water1.display();
   water1.moveWater();
+  fp1.display();
+  globaltimer++;
 }
 
   
