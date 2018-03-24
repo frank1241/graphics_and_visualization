@@ -4,12 +4,12 @@ class FishingPole {
   //this was adapted from the lecture notes
   //i rewrote the variable names to match what i'm doing
   //mass of the bobber
-  float bobmass = 1.0;
+  float bobmass = 5.0;
   float equilibrium = 850;
   //i'm assuming water has a spring constant, it doesn't but I'm assuming
-  float ks = 0.05;
+  float ks = 0.02;
   //and water has a pretty strong dampening force
-  float kd = 0.1;
+  float kd = 0.08;
   float buoyantforce, gravity, pull;
   FishingPole(float x, float y) {
     this.x = x;
@@ -47,12 +47,14 @@ class FishingPole {
     translate(0,25);
     bezier(this.x,this.y,this.x+5,this.y+5,this.x-15,this.y+45,this.x-30,this.y+25);
     popMatrix();
-    if(globaltimer%100 == 0){
+    fill(color(164,182,183));
+    if(globalTimer%400 == 0){
       this.y = this.inity;
+      this.vy = 0;
+      this.ay = 0;
     }
   }
 }
-
 class Fish{
   PShape group;
   PShape tail;
@@ -60,7 +62,7 @@ class Fish{
   PShape eye;
   int x, y;
   float vx, vy, ax, ay;
-  
+
   Fish(int x, int y, float vx, float vy, float ax, float ay){
   this.x = x;
   this.y = y;
@@ -82,22 +84,58 @@ class Fish{
   group.addChild(tail);
   group.addChild(body);
   group.addChild(eye);
-  group.rotate(0.48);
+  group.rotate(0.49);
   shape(group);
   }
   
-  void move(int time){
+  void move(){
+    float a;
     float deltax;
     float deltay;
-    deltax = vx * time + 0.5 * ax * time * time;
-    deltay = vy * time + 0.5 * ay * time * time;
+    float time;
+    float forceWater;
+    float mass;
+    float vy1=0;
+    time = 0.4;
     
+    if (this.x <= 750){
+    a = 9.8 * (sin(28.81*PI/180) - 0.50 * cos(28.81*PI/180));
+    this.ax = a * cos(28.81 * PI/180);
+    this.ay = a * sin(28.81 * PI/180);
+    
+    deltax = this.vx * time + 0.5 * this.ax * time * time;
+    deltay = this.vy * time + 0.5 * this.ay * time * time;
+    
+    this.vx += this.ax * time;
+    vy1 += this.ay * time; 
+    this.vy = this.ay * time;
+ 
+    this.x += deltax;
+    this.y += deltay;    
+    } else if (750 < this.x & this.x <= 1550){
+    forceWater = 0.20;
+    mass = 1;
+    this.ax = -forceWater/ mass;
+    deltax = this.vx * time + 0.5 * this.ax * time * time;
+    this.vx += this.ax * time;
+    this.x += deltax;
+   
+    // account for the bouyant force and gravity
+    this.ay = -(1.0 * 2.5 * 9.8 - mass * 9.8)/mass;
+    deltay = vy1 * time + 0.5 * this.ay * time * time;
+    this.y += deltay;  
+    vy1 = this.ay * time;
+    
+    } else {
+    this.x = 255;
+    this.y = 445;
+    this.vx = 0;
+    this.vy = 0;
+    this.ax = 0;
+    this.ay = 0;
+    }
   }
 }
-
-
-
-
 
 class Water{
   PShape water;
@@ -153,26 +191,39 @@ Water water1;
 Ramp ramp1;
 Fish fish1;
 FishingPole fp1;
-int globaltimer;
+int globalTimer;
+ArrayList<Fish> fish = new ArrayList();
+
 void setup(){
   size(1800, 1000);
   water1 = new Water(400, 1450, 750, 35, 0.1);
   ramp1 = new Ramp(0, 400, 500, 720);
-  fish1 = new Fish(225,445);
-  fp1 = new FishingPole(1350,435); 
+  fish.add(new Fish(225,445,0,0,0,0));
+  fp1 = new FishingPole(1350,435);
 }
 
 void draw() {
+  println(globalTimer);
+  globalTimer += 1;
+  if (globalTimer%50 == 0 & globalTimer <= 150){
+    fish.add(new Fish(225,445,0,0,0,0));
+  }
+ 
   background(255);
   rectMode(CORNERS);
   fill(color(134,117,31));
   rect(1450, 1000, 1800, 575);
-  fish1.display();
+
   ramp1.display();
   water1.display();
   water1.moveWater();
+  for (Fish f: fish){
+  f.move();
+  f.display();
+  }
   fp1.display();
-  globaltimer++;
 }
 
-  
+ void mousePressed() {
+   fish.add(new Fish(225,445,0,0,0,0));
+  }
