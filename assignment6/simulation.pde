@@ -1,3 +1,64 @@
+
+class Boat{
+  PShape group;
+  PShape sail1;
+  PShape sail2;
+  PShape boatBody;
+  PShape pole1;
+  PShape pole2;
+  int x, y;
+  float vx, vy, ax, ay;
+
+  Boat(int x, int y, float vx, float vy, float ax, float ay){
+  this.x = x;
+  this.y = y;
+  this.vx = vx;
+  this.vy = vy;
+  this.ax = ax;
+  this.ay = ay;
+  }
+
+  void display(){
+  group = createShape(GROUP);
+  sail1 = createShape(TRIANGLE, x+10, y - 35 , x + 95, y - 35, x + 95, y - 110);
+  sail1.setFill(color(175,238,238));
+  sail2 = createShape(TRIANGLE, x+190, y - 35 , x + 110, y - 35, x + 110, y - 90);
+  sail2.setFill(color(175,238,238));
+  boatBody = createShape(ARC, x+100, y-25, 100, 50, 0, PI, CHORD);
+  boatBody.setFill(color(139,69,19));
+  rectMode(RADIUS);
+  pole1 = createShape(RECT, x + 90, y - 68,5,42,7);
+  pole1.setFill(color(139,69,19));
+  pole2 = createShape(RECT, x + 115, y - 58,5,33,7);
+  pole2.setFill(color(139,69,19));
+  group.addChild(sail1);
+  group.addChild(sail2);
+  group.addChild(boatBody);
+  group.addChild(pole1);
+  group.addChild(pole2);
+  shape(group);
+  }
+
+  //void boatMovement(){
+    //float boat;
+    //float xchange;
+    //float ychange;
+    //float time;
+    //float forceWater;
+    //float mass = 50;
+    //float yvelocity=0;
+    //time = 0.4;
+
+
+
+    // account for the bouyant force and gravity
+    //this.ay = -(1.0 * 2.5 * 9.8 - mass * 9.8)/mass;
+    //ychange = yvelocity * time + 0.5 * this.ay * time * time;
+    //this.y += ychange;
+    //yvelocity = this.ay * time;
+//  }
+
+}
 class FishingPole {
   //location of pole
   float x, y, initx, inity, vy, ay;
@@ -24,7 +85,7 @@ class FishingPole {
     this.buoyantforce = -((ks * (this.y - equilibrium)) + kd*vy);
     //calculating the net acceleration
     this.ay = this.buoyantforce/(this.bobmass); //Force/Mass = acceleration
-    this.ay += this.gravity; 
+    this.ay += this.gravity;
     //add it to my vy
     this.vy = this.vy + this.ay;
     this.y += this.vy;
@@ -71,7 +132,7 @@ class Fish{
   this.ax = ax;
   this.ay = ay;
   }
-  
+
   void display(){
   group = createShape(GROUP);
   tail = createShape(TRIANGLE, x, y , x, y - 50, x + 50, y-25);
@@ -87,7 +148,7 @@ class Fish{
   group.rotate(0.49);
   shape(group);
   }
-  
+
   void move(){
     float a;
     float deltax;
@@ -97,21 +158,21 @@ class Fish{
     float mass;
     float vy1=0;
     time = 0.4;
-    
+
     if (this.x <= 750){
     a = 9.8 * (sin(28.81*PI/180) - 0.50 * cos(28.81*PI/180));
     this.ax = a * cos(28.81 * PI/180);
     this.ay = a * sin(28.81 * PI/180);
-    
+
     deltax = this.vx * time + 0.5 * this.ax * time * time;
     deltay = this.vy * time + 0.5 * this.ay * time * time;
-    
+
     this.vx += this.ax * time;
-    vy1 += this.ay * time; 
+    vy1 += this.ay * time;
     this.vy = this.ay * time;
- 
+
     this.x += deltax;
-    this.y += deltay;    
+    this.y += deltay;
     } else if (750 < this.x & this.x <= 1550){
     forceWater = 0.20;
     mass = 1;
@@ -119,13 +180,13 @@ class Fish{
     deltax = this.vx * time + 0.5 * this.ax * time * time;
     this.vx += this.ax * time;
     this.x += deltax;
-   
+
     // account for the bouyant force and gravity
     this.ay = -(1.0 * 2.5 * 9.8 - mass * 9.8)/mass;
     deltay = vy1 * time + 0.5 * this.ay * time * time;
-    this.y += deltay;  
+    this.y += deltay;
     vy1 = this.ay * time;
-    
+
     } else {
     this.x = 255;
     this.y = 445;
@@ -141,7 +202,7 @@ class Water{
   PShape water;
   int start, end;
   float depth, amplitude, phaseShift, x, y;
-  
+
   Water(int start, int end, float depth, float amplitude, float phaseShift){
       this.start = start;
       this.end = end;
@@ -149,11 +210,11 @@ class Water{
       this.amplitude = amplitude;
       this.phaseShift = phaseShift;
   }
-  
+
   void display(){
     water = createShape();
     water.beginShape();
-    water.fill(color(37,155,216)); 
+    water.fill(color(37,155,216));
     for(int i = start; i <= end; i+=10){
       x = i;
       y = amplitude * sin(x * PI / 180 + phaseShift) + depth;
@@ -170,7 +231,7 @@ class Water{
 }
 
 class Ramp{
-  PShape ramp; 
+  PShape ramp;
   int start, end, rampheight1, rampheight2;
   Ramp(int start, int end, int rampheight, int rampheight2){
   ramp = createShape();
@@ -187,6 +248,7 @@ class Ramp{
   }
 }
 
+Boat boat1;
 Water water1;
 Ramp ramp1;
 Fish fish1;
@@ -196,7 +258,8 @@ ArrayList<Fish> fish = new ArrayList();
 
 void setup(){
   size(1800, 1000);
-  water1 = new Water(400, 1450, 750, 35, 0.1);
+  boat1 = new Boat(800,700,0,0,0,0);
+  water1 = new Water(400, 1450, 735, 15, 0.1);
   ramp1 = new Ramp(0, 400, 500, 720);
   fish.add(new Fish(225,445,0,0,0,0));
   fp1 = new FishingPole(1350,435);
@@ -208,19 +271,21 @@ void draw() {
   if (globalTimer%50 == 0 & globalTimer <= 150){
     fish.add(new Fish(225,445,0,0,0,0));
   }
- 
+
   background(255);
   rectMode(CORNERS);
   fill(color(134,117,31));
   rect(1450, 1000, 1800, 575);
 
   ramp1.display();
+  boat1.display();
   water1.display();
   water1.moveWater();
   for (Fish f: fish){
   f.move();
   f.display();
   }
+  rectMode(CORNERS);
   fp1.display();
 }
 
