@@ -39,24 +39,28 @@ class Boat{
   shape(group);
   }
 
-  //void boatMovement(){
-    //float boat;
-    //float xchange;
-    //float ychange;
-    //float time;
-    //float forceWater;
-    //float mass = 50;
-    //float yvelocity=0;
-    //time = 0.4;
+  void boatMovement(){
+    float boat;
+    float xchange;
+    float time;
+    float forceWater = -5;
+    float forceWind = 20;
+    float windChange = -1;
+    float boatMass = 5;
+    time = 0.2;
 
+    if (this.x >= 900){
+      forceWind *= windChange;
+      // Doesnt work bexause keeps going back and forth
+      //this.vx = 0;
+    }
 
+    this.ax = (forceWater + forceWind)/(boatMass);
+    this.vx += this.ax*time;
+    xchange = (this.vx*time) + ((1/2)*this.ax*time*time);
 
-    // account for the bouyant force and gravity
-    //this.ay = -(1.0 * 2.5 * 9.8 - mass * 9.8)/mass;
-    //ychange = yvelocity * time + 0.5 * this.ay * time * time;
-    //this.y += ychange;
-    //yvelocity = this.ay * time;
-//  }
+    this.x += xchange;
+  }
 
 }
 class FishingPole {
@@ -258,7 +262,7 @@ ArrayList<Fish> fish = new ArrayList();
 
 void setup(){
   size(1800, 1000);
-  boat1 = new Boat(800,700,0,0,0,0);
+  boat1 = new Boat(450,730,0,0,0,0);
   water1 = new Water(400, 1450, 735, 15, 0.1);
   ramp1 = new Ramp(0, 400, 500, 720);
   fish.add(new Fish(225,445,0,0,0,0));
@@ -277,8 +281,9 @@ void draw() {
   fill(color(134,117,31));
   rect(1450, 1000, 1800, 575);
 
-  ramp1.display();
   boat1.display();
+  boat1.boatMovement();
+  ramp1.display();
   water1.display();
   water1.moveWater();
   for (Fish f: fish){
