@@ -17,15 +17,17 @@ class Asteroid{
       this.isCollided = true;
       other.isCollided = true;
     }
-  }
+  }*/
   void detectBulletCollision(Projectile other){
     float distance = sqrt(sq(other.x-this.x) + sq(other.y-this.y));
     if(distance < (this.radius+other.radius)){
       this.isCollided = true;
-      other.isCollided = true;
+      gameScore+= this.radius;
+      this.radius = 0;
+      other.r = 0;
     }    
   }
-  */
+
   void move(){
     this.x = this.x + this.velx;
     if(this.x <= 0){
@@ -33,13 +35,13 @@ class Asteroid{
     }
   }
   void display(){
+    for(Projectile other: projectiles){
+      this.detectBulletCollision(Projectile other);
+    }
     fill(255);
     ellipse(this.x,this.y,this.radius,this.radius);
     this.move();
   }
-}
-
-
 int globalTimer;
 int gameScore;
 int levelAmount=5;
