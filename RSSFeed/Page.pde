@@ -38,7 +38,8 @@ class Page{
     this.mouseOver();
     fill(120);
     rect(0,0,width,100);
-    
+    fill(0);
+    text(this.feeds.get(this.currentFeed).title + "\n "+this.feeds.get(this.currentFeed).date,10,16);
     fill(255);
     rect(10,800,50,50);
     fill(255);
