@@ -1,5 +1,5 @@
 class Feed{
-  String url;
+  String url,title,date;
   Article currentArticle,newArticle;
   XML feed,root;
   XML[] children;
@@ -10,6 +10,8 @@ class Feed{
     this.url = url;
     this.feed = loadXML(this.url);
     this.root = this.feed.getChild("channel");
+    this.title = this.root.getChild("title").getContent();
+    this.date = this.root.getChild("lastBuildDate").getContent();
     this.children = this.root.getChildren("item");
     this.articles = new ArrayList<Article>();
     for(XML i:this.children){
